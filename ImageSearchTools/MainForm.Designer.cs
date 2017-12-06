@@ -434,9 +434,9 @@
             // 
             this.lblStatus.AutoSizeMode = DevExpress.XtraEditors.LabelAutoSizeMode.None;
             this.lblStatus.Dock = System.Windows.Forms.DockStyle.Right;
-            this.lblStatus.Location = new System.Drawing.Point(426, 2);
+            this.lblStatus.Location = new System.Drawing.Point(347, 2);
             this.lblStatus.Name = "lblStatus";
-            this.lblStatus.Size = new System.Drawing.Size(89, 25);
+            this.lblStatus.Size = new System.Drawing.Size(168, 25);
             this.lblStatus.TabIndex = 0;
             this.lblStatus.Text = "File 0 of 0";
             // 
@@ -448,7 +448,7 @@
             this.Controls.Add(this.sccMainSplitter);
             this.Controls.Add(this.tsMainStrip);
             this.Name = "MainForm";
-            this.Text = "Image Search Tools by JAMGALACTIC";
+            this.Text = "201";
             this.Load += new System.EventHandler(this.MainForm_Load);
             ((System.ComponentModel.ISupportInitialize)(this.sccMainSplitter)).EndInit();
             this.sccMainSplitter.ResumeLayout(false);

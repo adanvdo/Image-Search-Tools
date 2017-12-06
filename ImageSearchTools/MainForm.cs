@@ -110,18 +110,18 @@ namespace ImageSearchTools
                 try
                 {
                     ImageDataSet.ImagesRow newRow = imageDataSet.Images.NewImagesRow();
-                    newRow.ImageNumberOdd = row.ImageNumberOdd;
-                    newRow.SelectOdd = row.SelectOdd;
-                    newRow.FullPathOdd = row.FullPathOdd;
-                    newRow.ImageNumberEven = row.ImageNumberEven;
-                    newRow.SelectEven = row.SelectEven;
-                    newRow.FullPathEven = row.FullPathEven;
-                    newRow.ImageNumberOdd2 = row.ImageNumberOdd2;
-                    newRow.SelectOdd2 = row.SelectOdd2;
-                    newRow.FullPathOdd2 = row.FullPathOdd2;
-                    newRow.ImageNumberEven2 = row.ImageNumberEven2;
-                    newRow.SelectEven2 = row.SelectEven2;
-                    newRow.FullPathEven2 = row.FullPathEven2;
+                    newRow.ImageNumberOdd = (row.IsImageNumberOddNull() ? 0 : row.ImageNumberOdd);
+                    newRow.SelectOdd = (row.IsSelectOddNull() ? false : row.SelectOdd);
+                    newRow.FullPathOdd = (row.IsFullPathOddNull() ? string.Empty : row.FullPathOdd);
+                    newRow.ImageNumberEven = (row.IsImageNumberEvenNull() ? 0 : row.ImageNumberEven);
+                    newRow.SelectEven = (row.IsSelectEvenNull() ? false : row.SelectEven);
+                    newRow.FullPathEven = (row.IsFullPathEvenNull() ? string.Empty : row.FullPathEven);
+                    newRow.ImageNumberOdd2 = (row.IsImageNumberOdd2Null() ? 0 : row.ImageNumberOdd2);
+                    newRow.SelectOdd2 = (row.IsSelectOdd2Null() ? false : row.SelectOdd2);
+                    newRow.FullPathOdd2 = (row.IsFullPathOdd2Null() ? string.Empty : row.FullPathOdd2);
+                    newRow.ImageNumberEven2 = (row.IsImageNumberEven2Null() ? 0 : row.ImageNumberEven2);
+                    newRow.SelectEven2 = (row.IsSelectEven2Null() ? false : row.SelectEven2);
+                    newRow.FullPathEven2 = (row.IsFullPathEven2Null() ? string.Empty : row.FullPathEven2);
                     imageDataSet.Images.AddImagesRow(newRow);
                 }
                 catch (Exception ex)
@@ -141,20 +141,20 @@ namespace ImageSearchTools
 
         private ImageDataSet.ImagesDataTable filterResults(List<FileInfo> list)
         {
-            ImageDataSet.ImagesDataTable idt = new ImageDataSet.ImagesDataTable();         
+            ImageDataSet.ImagesDataTable idt = new ImageDataSet.ImagesDataTable();
+            this.file = 0;
             this.fileCount = list.Count;
             ImageDataSet.ImagesRow row = null;
             bool newRow = true;
-            int column = 0;
+            int column = 1;
             for (int i = 0; i < list.Count; i++)
             {
                 file++;
                 if (newRow)
                 {
-                    column = 0;
+                    column = 1;
                     row = idt.NewImagesRow();
-                }
-                column++;                
+                }            
 
                 if (this.lblStatus.InvokeRequired)
                 {
@@ -164,15 +164,13 @@ namespace ImageSearchTools
                 {
                     this.lblStatus.Text = @"Filtering Files: " + file.ToString() + " of " + fileCount.ToString();
                 }
-                bool match = true;
+                bool match = false;
                 using (Image img = Image.FromFile(list[i].FullName))
                 {
-                    if (this.width > 0 && img.Width != this.width)
-                        match = false;
-                    if (this.height > 0 && img.Height != this.height)
-                        match = false;
-                    if (this.size > 0 && convertSize(Convert.ToInt32(list[i].Length), this.sizeType) != this.size)
-                        match = false;
+                    if (this.width > 0 && img.Width == this.width && this.height > 0 && img.Height == this.height)
+                        match = true;
+                    if (this.size > 0 && convertSize(Convert.ToInt32(list[i].Length), this.sizeType) == this.size)
+                        match = true;
                     if (match)
                     {
                         imageDictionary.Add(list[i].FullName, Tools.GetThumbnail(img));
@@ -183,12 +181,14 @@ namespace ImageSearchTools
                             row.SelectOdd = false;
                             row.FullPathOdd = list[i].FullName;
                             newRow = false;
+                            column++;
                         }
                         else if (column == 2)
                         {
                             row.ImageNumberEven = i;
                             row.SelectEven = false;
                             row.FullPathEven = list[i].FullName;
+                            column++;
                             //idt.AddImagesRow(row);
                             //newRow = true;
                         }
@@ -197,6 +197,7 @@ namespace ImageSearchTools
                             row.ImageNumberOdd2 = i;
                             row.SelectOdd2 = false;
                             row.FullPathOdd2 = list[i].FullName;
+                            column++;
                         }
                         else if (column == 4)
                         {
