@@ -1,0 +1,9 @@
+c:\users\jam\documents\visual studio 2012\Projects\ImageSearchTools\ImageSearchTools\bin\Release\ImageSearchTools.exe.config
+c:\users\jam\documents\visual studio 2012\Projects\ImageSearchTools\ImageSearchTools\bin\Release\ImageSearchTools.exe
+c:\users\jam\documents\visual studio 2012\Projects\ImageSearchTools\ImageSearchTools\bin\Release\ImageSearchTools.pdb
+c:\users\jam\documents\visual studio 2012\Projects\ImageSearchTools\ImageSearchTools\obj\Release\ImageSearchTools.MainForm.resources
+c:\users\jam\documents\visual studio 2012\Projects\ImageSearchTools\ImageSearchTools\obj\Release\ImageSearchTools.Properties.Resources.resources
+c:\users\jam\documents\visual studio 2012\Projects\ImageSearchTools\ImageSearchTools\obj\Release\ImageSearchTools.csproj.GenerateResource.Cache
+c:\users\jam\documents\visual studio 2012\Projects\ImageSearchTools\ImageSearchTools\obj\Release\ImageSearchTools.exe.licenses
+c:\users\jam\documents\visual studio 2012\Projects\ImageSearchTools\ImageSearchTools\obj\Release\ImageSearchTools.exe
+c:\users\jam\documents\visual studio 2012\Projects\ImageSearchTools\ImageSearchTools\obj\Release\ImageSearchTools.pdb

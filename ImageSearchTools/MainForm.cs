@@ -1,0 +1,396 @@
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.IO;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+
+namespace ImageSearchTools
+{
+    public partial class MainForm : Form
+    {
+        public static ImageTools Tools = new ImageTools();
+        private Dictionary<string, Image> imageDictionary = new Dictionary<string, Image>();
+        private List<FileInfo> tempResults = new List<FileInfo>();
+        private DirectoryInfo searchDir = null;
+        private string fileName;
+        private int width;
+        private int height;
+        private int size;
+        private SizeType sizeType;        
+
+        public MainForm()
+        {
+            InitializeComponent();
+        }
+
+        private void MainForm_Load(object sender, EventArgs e)
+        {
+            this.fileName = string.Empty;
+            this.width = 0;
+            this.height = 0;
+            this.size = 0;
+            this.sizeType = SizeType.MB;
+            this.cbSizeType.SelectedIndex = 1;
+        }
+
+        private void btnBrowse_Click(object sender, EventArgs e)
+        {
+            using (FolderBrowserDialog fbd = new FolderBrowserDialog())
+            {
+                DialogResult res = fbd.ShowDialog();
+                if (res == System.Windows.Forms.DialogResult.OK && !string.IsNullOrWhiteSpace(fbd.SelectedPath))
+                {
+                    this.searchDir = new DirectoryInfo(fbd.SelectedPath);
+                    this.txtDirectory.Text = fbd.SelectedPath;
+                }
+            }
+        }
+
+        private void btnSearch_Click(object sender, EventArgs e)
+        {
+            Cursor.Current = Cursors.WaitCursor;
+            if (!String.IsNullOrEmpty(txtDirectory.Text))
+            {
+                if (searchDir == null || searchDir.FullName != txtDirectory.Text)
+                {
+                    if (!Directory.Exists(txtDirectory.Text))
+                        return;
+                    else
+                        searchDir = new DirectoryInfo(txtDirectory.Text);
+                }
+                this.tempResults.Clear();
+                this.fileName = txtName.Text;
+                this.width = (string.IsNullOrWhiteSpace(txtWidth.Text) ? 0 : Convert.ToInt32(txtWidth.Text));
+                this.height = (string.IsNullOrWhiteSpace(txtHeight.Text) ? 0 : Convert.ToInt32(txtHeight.Text));
+                this.size = (string.IsNullOrWhiteSpace(txtSize.Text) ? 0 : Convert.ToInt32(txtSize.Text));
+                try
+                {
+                    this.processSearch();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
+            }
+            Cursor.Current = Cursors.Default;
+        }
+
+        private async void processSearch()
+        {
+            ImageDataSet.ImagesDataTable idt = null;
+            this.imageDictionary.Clear();
+            this.imageDataSet.Images.Clear();
+            bool complete = await Task.Run(() =>
+                {
+                    if (!string.IsNullOrWhiteSpace(this.fileName))
+                    {
+                        string[] results = Directory.GetFiles(this.searchDir.FullName, "*" + this.fileName + "*", SearchOption.AllDirectories);
+                        for (int i = 0; i < results.Length; i++)
+                        {
+                            FileInfo fi = new FileInfo(results[i]);
+                            this.tempResults.Add(fi);
+                        }
+                    }
+                    else
+                    {
+                        searchRecursive(this.searchDir.FullName);
+                    }
+
+                    idt = this.filterResults(this.tempResults);
+                    return true;
+                });
+            lblStatus.Text = string.Empty;
+            foreach (ImageDataSet.ImagesRow row in idt)
+            {
+                try
+                {
+                    ImageDataSet.ImagesRow newRow = imageDataSet.Images.NewImagesRow();
+                    newRow.ImageNumberOdd = row.ImageNumberOdd;
+                    newRow.SelectOdd = row.SelectOdd;
+                    newRow.FullPathOdd = row.FullPathOdd;
+                    newRow.ImageNumberEven = row.ImageNumberEven;
+                    newRow.SelectEven = row.SelectEven;
+                    newRow.FullPathEven = row.FullPathEven;
+                    newRow.ImageNumberOdd2 = row.ImageNumberOdd2;
+                    newRow.SelectOdd2 = row.SelectOdd2;
+                    newRow.FullPathOdd2 = row.FullPathOdd2;
+                    newRow.ImageNumberEven2 = row.ImageNumberEven2;
+                    newRow.SelectEven2 = row.SelectEven2;
+                    newRow.FullPathEven2 = row.FullPathEven2;
+                    imageDataSet.Images.AddImagesRow(newRow);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message + Environment.NewLine + (ex.InnerException != null ? ex.InnerException.Message : "No Inner Exception") + Environment.NewLine + ex.StackTrace);
+                }
+            }
+        }
+
+        private void updateImages()
+        {
+
+        }
+
+        private int fileCount = 0;
+        private int file = 0;
+
+        private ImageDataSet.ImagesDataTable filterResults(List<FileInfo> list)
+        {
+            ImageDataSet.ImagesDataTable idt = new ImageDataSet.ImagesDataTable();         
+            this.fileCount = list.Count;
+            ImageDataSet.ImagesRow row = null;
+            bool newRow = true;
+            int column = 0;
+            for (int i = 0; i < list.Count; i++)
+            {
+                file++;
+                if (newRow)
+                {
+                    column = 0;
+                    row = idt.NewImagesRow();
+                }
+                column++;                
+
+                if (this.lblStatus.InvokeRequired)
+                {
+                    this.lblStatus.BeginInvoke((MethodInvoker)delegate() { this.lblStatus.Text = @"Filtering File " + file.ToString() + " of " + fileCount.ToString(); }); ;
+                }
+                else
+                {
+                    this.lblStatus.Text = @"Filtering Files: " + file.ToString() + " of " + fileCount.ToString();
+                }
+                bool match = true;
+                using (Image img = Image.FromFile(list[i].FullName))
+                {
+                    if (this.width > 0 && img.Width != this.width)
+                        match = false;
+                    if (this.height > 0 && img.Height != this.height)
+                        match = false;
+                    if (this.size > 0 && convertSize(Convert.ToInt32(list[i].Length), this.sizeType) != this.size)
+                        match = false;
+                    if (match)
+                    {
+                        imageDictionary.Add(list[i].FullName, Tools.GetThumbnail(img));
+                        //if (newRow)
+                        if(column == 1)
+                        {
+                            row.ImageNumberOdd = i;
+                            row.SelectOdd = false;
+                            row.FullPathOdd = list[i].FullName;
+                            newRow = false;
+                        }
+                        else if (column == 2)
+                        {
+                            row.ImageNumberEven = i;
+                            row.SelectEven = false;
+                            row.FullPathEven = list[i].FullName;
+                            //idt.AddImagesRow(row);
+                            //newRow = true;
+                        }
+                        else if (column == 3)
+                        {
+                            row.ImageNumberOdd2 = i;
+                            row.SelectOdd2 = false;
+                            row.FullPathOdd2 = list[i].FullName;
+                        }
+                        else if (column == 4)
+                        {
+                            row.ImageNumberEven2 = i;
+                            row.SelectEven2 = false;
+                            row.FullPathEven2 = list[i].FullName;
+                            idt.AddImagesRow(row);
+                            newRow = true;
+                        }
+                    }
+                }
+                
+            }
+            if (!newRow)
+            {
+                if (row.IsImageNumberEvenNull() || row.ImageNumberEven == 0)
+                {
+                    row.ImageNumberEven = row.ImageNumberOdd + 1;
+                    row.SelectEven = false;
+                    row.FullPathEven = string.Empty;
+                }
+                if (row.IsImageNumberOdd2Null() || row.ImageNumberOdd2 == 0)
+                {
+                    row.ImageNumberOdd2 = row.ImageNumberEven + 1;
+                    row.SelectOdd2 = false;
+                    row.FullPathOdd2 = string.Empty;
+                }
+                if (row.IsImageNumberEven2Null() || row.ImageNumberEven2 == 0)
+                {
+                    row.ImageNumberEven2 = row.ImageNumberOdd2 + 1;
+                    row.SelectEven2 = false;
+                    row.FullPathEven2 = string.Empty;
+                }
+                idt.AddImagesRow(row);
+            }
+            return idt;
+        }
+
+
+        private void searchRecursive(string folderPath)
+        {
+            foreach (string file in Directory.GetFiles(folderPath))
+            {
+                FileInfo fi = new FileInfo(file);
+                if (Tools.FileIsImage(fi))
+                    this.tempResults.Add(fi);
+            }
+            foreach (string dir in Directory.GetDirectories(folderPath))
+            {
+                searchRecursive(dir);
+            }
+        }
+
+        private void cbSizeType_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (cbSizeType.SelectedText == "KB")
+                this.sizeType = SizeType.KB;
+            else if (cbSizeType.SelectedText == "MB")
+                this.sizeType = SizeType.MB;
+            else if (cbSizeType.SelectedText == "GB")
+                this.sizeType = SizeType.GB;
+        }
+
+        private int convertSize(int bytes, SizeType toType)
+        {
+            int i = (toType == SizeType.KB ? (bytes * 1000) : (toType == SizeType.MB ? (bytes * 1000) * 1000 : (toType == SizeType.GB ? ((bytes * 1000) * 1000) * 1000 : 0)));
+            return i;
+        }
+
+        private void gvImages_CustomDrawCell(object sender, DevExpress.XtraGrid.Views.Base.RowCellCustomDrawEventArgs e)
+        {
+            if (e.Column == colFullPathOdd || e.Column == colFullPathEven)
+            {
+                if (string.IsNullOrWhiteSpace((e.Column == colFullPathOdd ? gvImages.GetRowCellValue(e.RowHandle, colFullPathOdd).ToString() : gvImages.GetRowCellValue(e.RowHandle, colFullPathEven).ToString())))
+                    return;
+                e.Handled = true;
+                Point pos = new Point(e.Bounds.X, e.Bounds.Y);
+                e.Graphics.DrawImage((Image)imageDictionary[gvImages.GetRowCellValue(e.RowHandle, (e.Column == colFullPathOdd ? colFullPathOdd : colFullPathEven)).ToString()], pos);
+            }
+            if (e.Column == colFullPathOdd2 || e.Column == colFullPathEven2)
+            {
+                if (string.IsNullOrWhiteSpace((e.Column == colFullPathOdd2 ? gvImages.GetRowCellValue(e.RowHandle, colFullPathOdd2).ToString() : gvImages.GetRowCellValue(e.RowHandle, colFullPathEven2).ToString())))
+                    return;
+                e.Handled = true;
+                Point pos = new Point(e.Bounds.X, e.Bounds.Y);
+                e.Graphics.DrawImage((Image)imageDictionary[gvImages.GetRowCellValue(e.RowHandle, (e.Column == colFullPathOdd2 ? colFullPathOdd2 : colFullPathEven2)).ToString()], pos);
+            }
+        }
+
+        private void btnDelete_Click(object sender, EventArgs e)
+        {
+            DialogResult res = MessageBox.Show("Delete the selected images?", "Confirm Delete", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            List<string> files = new List<string>();
+            foreach (ImageDataSet.ImagesRow row in imageDataSet.Images)
+            {
+                if (row.SelectOdd)
+                    files.Add(row.FullPathOdd);
+                if (row.SelectEven && !string.IsNullOrWhiteSpace(row.FullPathEven))
+                    files.Add(row.FullPathEven);
+                if (row.SelectOdd2 && !string.IsNullOrWhiteSpace(row.FullPathOdd2))
+                    files.Add(row.FullPathOdd2);
+                if (row.SelectEven2 && !string.IsNullOrWhiteSpace(row.FullPathEven2))
+                    files.Add(row.FullPathEven2);
+            }
+            this.deleteFilesAsync(files);
+        }
+
+        private async void deleteFilesAsync(List<string> files)
+        {
+            int deleted = await Tools.DeleteImages(files, this.lblStatus);
+            this.lblStatus.Text = string.Empty;
+            MessageBox.Show("Deleted " + deleted.ToString() + " Images");
+            imageDataSet.Images.Clear();
+        }
+
+        private void simpleButton1_Click(object sender, EventArgs e)
+        {
+
+        }
+    }
+
+    public enum SizeType
+    {
+        KB = 0,
+        MB = 1,
+        GB = 2
+    }
+
+    public class ImageTools : List<string>
+    {
+        public List<string> JPG = new List<string>() { ".jpg", ".jpeg", ".JPG", ".Jpeg", ".JPEG" };
+        public List<string> PNG = new List<string>() { ".png", ".PNG" };
+        public List<string> BMP = new List<string>() { ".bmp", ".BMP" };
+        public List<string> TIF = new List<string>() { ".tif", ".TIF" };
+        public List<string> GIF = new List<string>() { ".gif", ".GIF" };
+        public List<string> ALL = new List<string>() { ".jpg", ".jpeg", ".JPG", ".Jpeg", ".JPEG", ".png", ".PNG", ".bmp", ".BMP", ".tif", ".TIF", ".gif", ".GIF" };
+
+        public ImageTools()
+        {
+
+        }
+
+        public bool FileIsImage(FileInfo fileInfo)
+        {
+            bool b = false;
+            if (ALL.IndexOf(fileInfo.Extension) >= 0)
+                b = true;
+            return b;
+        }
+
+        public Image GetThumbnail(Image image)
+        {
+            decimal w = image.Width;
+            decimal h = image.Height;
+            decimal mw = 100 / w;
+            decimal mh = 100 / h;
+            decimal nw = (w > h ? (w * mw) : (w * mh));
+            decimal nh = (h > w ? (h * mh) : (h * mw));
+            int nwr = Convert.ToInt32(Math.Round(nw));
+            int nhr = Convert.ToInt32(Math.Round(nh));
+            Image newImage = new Bitmap(nwr, nhr);
+            using (Graphics graphicsHandle = Graphics.FromImage(newImage))
+            {
+                graphicsHandle.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic;
+                graphicsHandle.DrawImage(image, 0, 0, nwr, nhr);
+            }
+            return newImage;
+        }
+
+        public async Task<int> DeleteImages(List<string> imageList, DevExpress.XtraEditors.LabelControl lblStatus)
+        {
+            int count = 0;
+
+            for (int i = 0; i < imageList.Count; i++)
+            {
+                if (lblStatus.InvokeRequired)
+                {
+                    lblStatus.BeginInvoke((MethodInvoker)delegate() { lblStatus.Text = @"Deleting Files: " + count.ToString() + " of " + imageList.Count.ToString(); }); ;
+                }
+                else
+                {
+                    lblStatus.Text = @"Deleting Files: " + count.ToString() + " of " + imageList.Count.ToString();
+                }
+                try
+                {
+                    File.Delete(imageList[i]);
+                    count++;
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Unable to delete file " + imageList[i]);
+                }
+            }
+            return count;
+        }
+    }
+}
