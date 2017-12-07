@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using ImageSearchTools.Utilities;
 
 namespace ImageSearchTools
 {
@@ -160,7 +161,7 @@ namespace ImageSearchTools
                 {
                     this.lblStatus.BeginInvoke((MethodInvoker)delegate() { this.lblStatus.Text = @"Filtering File " + file.ToString() + " of " + fileCount.ToString(); }); ;
                 }
-                else
+                else I
                 {
                     this.lblStatus.Text = @"Filtering Files: " + file.ToString() + " of " + fileCount.ToString();
                 }
@@ -173,7 +174,7 @@ namespace ImageSearchTools
                         match = true;
                     if (match)
                     {
-                        imageDictionary.Add(list[i].FullName, Tools.GetThumbnail(img));
+                        imageDictionary.Add(list[i].FullName, ImageProcessor.GetThumbnail(img));
                         //if (newRow)
                         if(column == 1)
                         {
@@ -242,7 +243,7 @@ namespace ImageSearchTools
             foreach (string file in Directory.GetFiles(folderPath))
             {
                 FileInfo fi = new FileInfo(file);
-                if (Tools.FileIsImage(fi))
+                if (ImageProcessor.FileIsImage(fi))
                     this.tempResults.Add(fi);
             }
             foreach (string dir in Directory.GetDirectories(folderPath))
@@ -307,7 +308,7 @@ namespace ImageSearchTools
 
         private async void deleteFilesAsync(List<string> files)
         {
-            int deleted = await Tools.DeleteImages(files, this.lblStatus);
+            int deleted = await ImageProcessor.DeleteImages(files, this.lblStatus);
             this.lblStatus.Text = string.Empty;
             MessageBox.Show("Deleted " + deleted.ToString() + " Images");
             imageDataSet.Images.Clear();
@@ -316,82 +317,6 @@ namespace ImageSearchTools
         private void simpleButton1_Click(object sender, EventArgs e)
         {
 
-        }
-    }
-
-    public enum SizeType
-    {
-        KB = 0,
-        MB = 1,
-        GB = 2
-    }
-
-    public class ImageTools : List<string>
-    {
-        public List<string> JPG = new List<string>() { ".jpg", ".jpeg", ".JPG", ".Jpeg", ".JPEG" };
-        public List<string> PNG = new List<string>() { ".png", ".PNG" };
-        public List<string> BMP = new List<string>() { ".bmp", ".BMP" };
-        public List<string> TIF = new List<string>() { ".tif", ".TIF" };
-        public List<string> GIF = new List<string>() { ".gif", ".GIF" };
-        public List<string> ALL = new List<string>() { ".jpg", ".jpeg", ".JPG", ".Jpeg", ".JPEG", ".png", ".PNG", ".bmp", ".BMP", ".tif", ".TIF", ".gif", ".GIF" };
-
-        public ImageTools()
-        {
-
-        }
-
-        public bool FileIsImage(FileInfo fileInfo)
-        {
-            bool b = false;
-            if (ALL.IndexOf(fileInfo.Extension) >= 0)
-                b = true;
-            return b;
-        }
-
-        public Image GetThumbnail(Image image)
-        {
-            decimal w = image.Width;
-            decimal h = image.Height;
-            decimal mw = 100 / w;
-            decimal mh = 100 / h;
-            decimal nw = (w > h ? (w * mw) : (w * mh));
-            decimal nh = (h > w ? (h * mh) : (h * mw));
-            int nwr = Convert.ToInt32(Math.Round(nw));
-            int nhr = Convert.ToInt32(Math.Round(nh));
-            Image newImage = new Bitmap(nwr, nhr);
-            using (Graphics graphicsHandle = Graphics.FromImage(newImage))
-            {
-                graphicsHandle.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic;
-                graphicsHandle.DrawImage(image, 0, 0, nwr, nhr);
-            }
-            return newImage;
-        }
-
-        public async Task<int> DeleteImages(List<string> imageList, DevExpress.XtraEditors.LabelControl lblStatus)
-        {
-            int count = 0;
-
-            for (int i = 0; i < imageList.Count; i++)
-            {
-                if (lblStatus.InvokeRequired)
-                {
-                    lblStatus.BeginInvoke((MethodInvoker)delegate() { lblStatus.Text = @"Deleting Files: " + count.ToString() + " of " + imageList.Count.ToString(); }); ;
-                }
-                else
-                {
-                    lblStatus.Text = @"Deleting Files: " + count.ToString() + " of " + imageList.Count.ToString();
-                }
-                try
-                {
-                    File.Delete(imageList[i]);
-                    count++;
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show("Unable to delete file " + imageList[i]);
-                }
-            }
-            return count;
         }
     }
 }
