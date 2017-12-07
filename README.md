@@ -4,6 +4,7 @@ based on File Name, Image Dimensions, and/or File Size.</p>
 <p>It was originally written to assist with locating specific images quickly 
 in order to delete them.</p>
 <b>Latest Release</b>
+<p><b>Version: 1.0.1.0</b></p>
 <p>To install the latest published version of the application, <a href="http://jamgalactic.com/applications/IST/install.htm">click here</a></p>
 <b>Requirements</b>
 <p>This is a Visual Studio 2012 Project that includes the following premium controls</p>
