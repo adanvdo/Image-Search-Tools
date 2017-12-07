@@ -8,3 +8,9 @@ in order to delete them.</p>
 <ul>
 <li>DevExpress WinForms v16.1.5</li>
 </ul>
+<b>To-Do<b>
+<ul>
+<li>Batch Resize</li>
+<li>Batch Rename</li>
+<li>Other Tasks??</li>
+</ul>
