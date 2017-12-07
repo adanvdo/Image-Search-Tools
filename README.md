@@ -11,6 +11,9 @@ in order to delete them.</p>
 <b>To-Do<b>
 <ul>
 <li>Installer</li>
+<li>Display Selected Image Details</li>
+<li>Fix Scrolling with Mouse Wheel</li>
+<li>Keep existing images on screen after deleting others</li>
 <li>Batch Resize</li>
 <li>Batch Rename</li>
 <li>Other Tasks??</li>
