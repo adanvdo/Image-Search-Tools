@@ -13,14 +13,14 @@ namespace ImageSearchTools.Utilities
 {
     public static class ImageProcessor
     {
-        public List<string> JPG = new List<string>() { ".jpg", ".jpeg", ".JPG", ".Jpeg", ".JPEG" };
-        public List<string> PNG = new List<string>() { ".png", ".PNG" };
-        public List<string> BMP = new List<string>() { ".bmp", ".BMP" };
-        public List<string> TIF = new List<string>() { ".tif", ".TIF" };
-        public List<string> GIF = new List<string>() { ".gif", ".GIF" };
-        public List<string> ALL = new List<string>() { ".jpg", ".jpeg", ".JPG", ".Jpeg", ".JPEG", ".png", ".PNG", ".bmp", ".BMP", ".tif", ".TIF", ".gif", ".GIF" };
+        public static List<string> JPG = new List<string>() { ".jpg", ".jpeg", ".JPG", ".Jpeg", ".JPEG" };
+        public static List<string> PNG = new List<string>() { ".png", ".PNG" };
+        public static List<string> BMP = new List<string>() { ".bmp", ".BMP" };
+        public static List<string> TIF = new List<string>() { ".tif", ".TIF" };
+        public static List<string> GIF = new List<string>() { ".gif", ".GIF" };
+        public static List<string> ALL = new List<string>() { ".jpg", ".jpeg", ".JPG", ".Jpeg", ".JPEG", ".png", ".PNG", ".bmp", ".BMP", ".tif", ".TIF", ".gif", ".GIF" };
 
-        public bool FileIsImage(FileInfo fileInfo)
+        public static bool FileIsImage(FileInfo fileInfo)
         {
             bool b = false;
             if (ALL.IndexOf(fileInfo.Extension) >= 0)
@@ -28,7 +28,7 @@ namespace ImageSearchTools.Utilities
             return b;
         }
 
-        public Image GetThumbnail(Image image)
+        public static Image GetThumbnail(Image image)
         {
             decimal w = image.Width;
             decimal h = image.Height;
@@ -47,7 +47,7 @@ namespace ImageSearchTools.Utilities
             return newImage;
         }
 
-        public async Task<int> DeleteImages(List<string> imageList, DevExpress.XtraEditors.LabelControl lblStatus)
+        public static async Task<int> DeleteImages(List<string> imageList, DevExpress.XtraEditors.LabelControl lblStatus)
         {
             int count = 0;
 

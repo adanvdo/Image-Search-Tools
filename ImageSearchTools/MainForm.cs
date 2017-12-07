@@ -21,7 +21,7 @@ namespace ImageSearchTools
         private int width;
         private int height;
         private int size;
-        private SizeType sizeType;        
+        private FileSizeType sizeType;        
 
         public MainForm()
         {
@@ -34,7 +34,7 @@ namespace ImageSearchTools
             this.width = 0;
             this.height = 0;
             this.size = 0;
-            this.sizeType = SizeType.MB;
+            this.sizeType = FileSizeType.MB;
             this.cbSizeType.SelectedIndex = 1;
         }
 
@@ -131,11 +131,6 @@ namespace ImageSearchTools
             }
         }
 
-        private void updateImages()
-        {
-
-        }
-
         private int fileCount = 0;
         private int file = 0;
 
@@ -160,7 +155,7 @@ namespace ImageSearchTools
                 {
                     this.lblStatus.BeginInvoke((MethodInvoker)delegate() { this.lblStatus.Text = @"Filtering File " + file.ToString() + " of " + fileCount.ToString(); }); ;
                 }
-                else I
+                else
                 {
                     this.lblStatus.Text = @"Filtering Files: " + file.ToString() + " of " + fileCount.ToString();
                 }
@@ -254,16 +249,16 @@ namespace ImageSearchTools
         private void cbSizeType_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (cbSizeType.SelectedText == "KB")
-                this.sizeType = SizeType.KB;
+                this.sizeType = FileSizeType.KB;
             else if (cbSizeType.SelectedText == "MB")
-                this.sizeType = SizeType.MB;
+                this.sizeType = FileSizeType.MB;
             else if (cbSizeType.SelectedText == "GB")
-                this.sizeType = SizeType.GB;
+                this.sizeType = FileSizeType.GB;
         }
 
-        private int convertSize(int bytes, SizeType toType)
+        private int convertSize(int bytes, FileSizeType toType)
         {
-            int i = (toType == SizeType.KB ? (bytes * 1000) : (toType == SizeType.MB ? (bytes * 1000) * 1000 : (toType == SizeType.GB ? ((bytes * 1000) * 1000) * 1000 : 0)));
+            int i = (toType == FileSizeType.KB ? (bytes * 1000) : (toType == FileSizeType.MB ? (bytes * 1000) * 1000 : (toType == FileSizeType.GB ? ((bytes * 1000) * 1000) * 1000 : 0)));
             return i;
         }
 

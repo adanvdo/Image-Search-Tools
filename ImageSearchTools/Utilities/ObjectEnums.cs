@@ -2,7 +2,7 @@ using System;
 
 namespace ImageSearchTools.Utilities
 {
-    public enum SizeType
+    public enum FileSizeType
     {
         KB = 0,
         MB = 1,
