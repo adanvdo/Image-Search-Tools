@@ -10,6 +10,7 @@ in order to delete them.</p>
 </ul>
 <b>To-Do<b>
 <ul>
+<li>Installer</li>
 <li>Batch Resize</li>
 <li>Batch Rename</li>
 <li>Other Tasks??</li>
