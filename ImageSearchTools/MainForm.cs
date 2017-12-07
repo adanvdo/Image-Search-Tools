@@ -361,5 +361,18 @@ namespace ImageSearchTools
                 Logger.LogException(appDataFolder, ex);
             }
         }
+
+        private void resetSearchTerms()
+        {
+            txtName.Text = string.Empty;
+            txtWidth.Text = string.Empty;
+            txtHeight.Text = string.Empty;
+            txtSize.Text = string.Empty;
+        }
+
+        private void tsbtnClear_Click(object sender, EventArgs e)
+        {
+            resetSearchTerms();
+        }
     }
 }

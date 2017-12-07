@@ -30,6 +30,7 @@
         {
             this.components = new System.ComponentModel.Container();
             this.tsMainStrip = new System.Windows.Forms.ToolStrip();
+            this.tsbtnClear = new System.Windows.Forms.ToolStripButton();
             this.sccMainSplitter = new DevExpress.XtraEditors.SplitContainerControl();
             this.btnBrowse = new DevExpress.XtraEditors.SimpleButton();
             this.labelControl1 = new DevExpress.XtraEditors.LabelControl();
@@ -65,6 +66,7 @@
             this.btnDelete = new DevExpress.XtraEditors.SimpleButton();
             this.lblStatus = new DevExpress.XtraEditors.LabelControl();
             this.btnSelectAll = new DevExpress.XtraEditors.SimpleButton();
+            this.tsMainStrip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.sccMainSplitter)).BeginInit();
             this.sccMainSplitter.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.txtDirectory.Properties)).BeginInit();
@@ -84,11 +86,25 @@
             // 
             // tsMainStrip
             // 
+            this.tsMainStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.tsbtnClear});
             this.tsMainStrip.Location = new System.Drawing.Point(0, 0);
             this.tsMainStrip.Name = "tsMainStrip";
             this.tsMainStrip.Size = new System.Drawing.Size(517, 25);
             this.tsMainStrip.TabIndex = 0;
             this.tsMainStrip.Text = "toolStrip1";
+            // 
+            // tsbtnClear
+            // 
+            this.tsbtnClear.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.tsbtnClear.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.tsbtnClear.Image = global::ImageSearchTools.Properties.Resources.wipe;
+            this.tsbtnClear.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tsbtnClear.Name = "tsbtnClear";
+            this.tsbtnClear.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.tsbtnClear.Size = new System.Drawing.Size(23, 22);
+            this.tsbtnClear.Text = "Clear Entries";
+            this.tsbtnClear.Click += new System.EventHandler(this.tsbtnClear_Click);
             // 
             // sccMainSplitter
             // 
@@ -462,6 +478,8 @@
             this.Name = "MainForm";
             this.Text = "Image Search Tools by JAMGALACTIC";
             this.Load += new System.EventHandler(this.MainForm_Load);
+            this.tsMainStrip.ResumeLayout(false);
+            this.tsMainStrip.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.sccMainSplitter)).EndInit();
             this.sccMainSplitter.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.txtDirectory.Properties)).EndInit();
@@ -520,6 +538,7 @@
         private DevExpress.XtraGrid.Columns.GridColumn colSelectEven2;
         private DevExpress.XtraGrid.Columns.GridColumn colFullPathEven2;
         private DevExpress.XtraEditors.SimpleButton btnSelectAll;
+        private System.Windows.Forms.ToolStripButton tsbtnClear;
     }
 }
 

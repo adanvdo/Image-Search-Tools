@@ -8,3 +8,7 @@ C:\Users\jam\Documents\Visual Studio 2012\Projects\ImageSearchTools\ImageSearchT
 C:\Users\jam\Documents\Visual Studio 2012\Projects\ImageSearchTools\ImageSearchTools\obj\Debug\ImageSearchTools.exe
 C:\Users\jam\Documents\Visual Studio 2012\Projects\ImageSearchTools\ImageSearchTools\obj\Debug\ImageSearchTools.pdb
 C:\Users\jam\Documents\Visual Studio 2012\Projects\ImageSearchTools\ImageSearchTools\obj\Debug\ImageSearchTools.csprojResolveAssemblyReference.cache
+C:\Users\jam\documents\visual studio 2012\Projects\ImageSearchTools\ImageSearchTools\bin\Debug\ImageSearchTools.exe.manifest
+C:\Users\jam\documents\visual studio 2012\Projects\ImageSearchTools\ImageSearchTools\bin\Debug\ImageSearchTools.application
+C:\Users\jam\documents\visual studio 2012\Projects\ImageSearchTools\ImageSearchTools\obj\Debug\ImageSearchTools.exe.manifest
+C:\Users\jam\documents\visual studio 2012\Projects\ImageSearchTools\ImageSearchTools\obj\Debug\ImageSearchTools.application
