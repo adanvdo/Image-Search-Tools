@@ -14,7 +14,6 @@ namespace ImageSearchTools
 {
     public partial class MainForm : Form
     {
-        public static ImageTools Tools = new ImageTools();
         private Dictionary<string, Image> imageDictionary = new Dictionary<string, Image>();
         private List<FileInfo> tempResults = new List<FileInfo>();
         private DirectoryInfo searchDir = null;
