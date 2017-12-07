@@ -460,7 +460,7 @@
             this.Controls.Add(this.sccMainSplitter);
             this.Controls.Add(this.tsMainStrip);
             this.Name = "MainForm";
-            this.Text = "201";
+            this.Text = "Image Search Tools by JAMGALACTIC";
             this.Load += new System.EventHandler(this.MainForm_Load);
             ((System.ComponentModel.ISupportInitialize)(this.sccMainSplitter)).EndInit();
             this.sccMainSplitter.ResumeLayout(false);

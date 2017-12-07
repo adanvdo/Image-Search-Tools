@@ -14,6 +14,7 @@ namespace ImageSearchTools
 {
     public partial class MainForm : Form
     {
+        private string appDataFolder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "JAMGALACTIC", "IST");
         private Dictionary<string, Image> imageDictionary = new Dictionary<string, Image>();
         private List<FileInfo> tempResults = new List<FileInfo>();
         private DirectoryInfo searchDir = null;
@@ -45,8 +46,15 @@ namespace ImageSearchTools
                 DialogResult res = fbd.ShowDialog();
                 if (res == System.Windows.Forms.DialogResult.OK && !string.IsNullOrWhiteSpace(fbd.SelectedPath))
                 {
-                    this.searchDir = new DirectoryInfo(fbd.SelectedPath);
-                    this.txtDirectory.Text = fbd.SelectedPath;
+                    try
+                    {
+                        this.searchDir = new DirectoryInfo(fbd.SelectedPath);
+                        this.txtDirectory.Text = fbd.SelectedPath;
+                    }
+                    catch (Exception ex)
+                    {
+                        Logger.LogException(appDataFolder, ex, true);
+                    }
                 }
             }
         }
@@ -68,14 +76,25 @@ namespace ImageSearchTools
                 this.width = (string.IsNullOrWhiteSpace(txtWidth.Text) ? 0 : Convert.ToInt32(txtWidth.Text));
                 this.height = (string.IsNullOrWhiteSpace(txtHeight.Text) ? 0 : Convert.ToInt32(txtHeight.Text));
                 this.size = (string.IsNullOrWhiteSpace(txtSize.Text) ? 0 : Convert.ToInt32(txtSize.Text));
+
+                if ((width > 0 && height == 0) || (width == 0 && height > 0))
+                {
+                    MessageBox.Show("Please enter both a width and a height");
+                    return;
+                }
+
                 try
                 {
                     this.processSearch();
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show(ex.Message);
+                    Logger.LogException(appDataFolder, ex, true);
                 }
+            }
+            else
+            {
+                MessageBox.Show("Please select a directory to search");
             }
             Cursor.Current = Cursors.Default;
         }
@@ -126,7 +145,7 @@ namespace ImageSearchTools
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show(ex.Message + Environment.NewLine + (ex.InnerException != null ? ex.InnerException.Message : "No Inner Exception") + Environment.NewLine + ex.StackTrace);
+                    Logger.LogException(appDataFolder, ex);
                 }
             }
         }
@@ -142,72 +161,77 @@ namespace ImageSearchTools
             ImageDataSet.ImagesRow row = null;
             bool newRow = true;
             int column = 1;
-            for (int i = 0; i < list.Count; i++)
+            try
             {
-                file++;
-                if (newRow)
+                for (int i = 0; i < list.Count; i++)
                 {
-                    column = 1;
-                    row = idt.NewImagesRow();
-                }            
-
-                if (this.lblStatus.InvokeRequired)
-                {
-                    this.lblStatus.BeginInvoke((MethodInvoker)delegate() { this.lblStatus.Text = @"Filtering File " + file.ToString() + " of " + fileCount.ToString(); }); ;
-                }
-                else
-                {
-                    this.lblStatus.Text = @"Filtering Files: " + file.ToString() + " of " + fileCount.ToString();
-                }
-                bool match = true;
-                using (Image img = Image.FromFile(list[i].FullName))
-                {
-                    if ((this.width > 0 && this.height > 0) || this.size > 0)
-                        match = false;
-                    if (this.width > 0 && img.Width == this.width && this.height > 0 && img.Height == this.height)
-                        match = true;
-                    if (this.size > 0 && convertSize(Convert.ToInt32(list[i].Length), this.sizeType) == this.size)
-                        match = true;
-                    if (match)
+                    file++;
+                    if (newRow)
                     {
-                        imageDictionary.Add(list[i].FullName, ImageProcessor.GetThumbnail(img));
-                        //if (newRow)
-                        if(column == 1)
+                        column = 1;
+                        row = idt.NewImagesRow();
+                    }
+
+                    if (this.lblStatus.InvokeRequired)
+                    {
+                        this.lblStatus.BeginInvoke((MethodInvoker)delegate() { this.lblStatus.Text = @"Filtering Files: " + file.ToString() + " of " + fileCount.ToString(); }); ;
+                    }
+                    else
+                    {
+                        this.lblStatus.Text = @"Filtering Files: " + file.ToString() + " of " + fileCount.ToString();
+                    }
+                    bool match = true;
+                    using (Image img = Image.FromFile(list[i].FullName))
+                    {
+                        if ((this.width > 0 && this.height > 0) || this.size > 0)
+                            match = false;
+                        if (this.width > 0 && img.Width == this.width && this.height > 0 && img.Height == this.height)
+                            match = true;
+                        if (this.size > 0 && convertSize(Convert.ToInt32(list[i].Length), this.sizeType) == this.size)
+                            match = true;
+                        if (match)
                         {
-                            row.ImageNumberOdd = i;
-                            row.SelectOdd = false;
-                            row.FullPathOdd = list[i].FullName;
-                            newRow = false;
-                            column++;
-                        }
-                        else if (column == 2)
-                        {
-                            row.ImageNumberEven = i;
-                            row.SelectEven = false;
-                            row.FullPathEven = list[i].FullName;
-                            column++;
-                            //idt.AddImagesRow(row);
-                            //newRow = true;
-                        }
-                        else if (column == 3)
-                        {
-                            row.ImageNumberOdd2 = i;
-                            row.SelectOdd2 = false;
-                            row.FullPathOdd2 = list[i].FullName;
-                            column++;
-                        }
-                        else if (column == 4)
-                        {
-                            row.ImageNumberEven2 = i;
-                            row.SelectEven2 = false;
-                            row.FullPathEven2 = list[i].FullName;
-                            idt.AddImagesRow(row);
-                            newRow = true;
+                            imageDictionary.Add(list[i].FullName, ImageProcessor.GetThumbnail(img));
+                            if (column == 1)
+                            {
+                                row.ImageNumberOdd = i;
+                                row.SelectOdd = false;
+                                row.FullPathOdd = list[i].FullName;
+                                newRow = false;
+                                column++;
+                            }
+                            else if (column == 2)
+                            {
+                                row.ImageNumberEven = i;
+                                row.SelectEven = false;
+                                row.FullPathEven = list[i].FullName;
+                                column++;
+                            }
+                            else if (column == 3)
+                            {
+                                row.ImageNumberOdd2 = i;
+                                row.SelectOdd2 = false;
+                                row.FullPathOdd2 = list[i].FullName;
+                                column++;
+                            }
+                            else if (column == 4)
+                            {
+                                row.ImageNumberEven2 = i;
+                                row.SelectEven2 = false;
+                                row.FullPathEven2 = list[i].FullName;
+                                idt.AddImagesRow(row);
+                                newRow = true;
+                            }
                         }
                     }
+
                 }
-                
             }
+            catch (Exception ex)
+            {
+                Logger.LogException(appDataFolder, ex, true);
+            }
+
             if (!newRow)
             {
                 if (row.IsImageNumberEvenNull() || row.ImageNumberEven == 0)
@@ -287,19 +311,29 @@ namespace ImageSearchTools
         private void btnDelete_Click(object sender, EventArgs e)
         {
             DialogResult res = MessageBox.Show("Delete the selected images?", "Confirm Delete", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-            List<string> files = new List<string>();
-            foreach (ImageDataSet.ImagesRow row in imageDataSet.Images)
+            if (res == System.Windows.Forms.DialogResult.Yes)
             {
-                if (row.SelectOdd)
-                    files.Add(row.FullPathOdd);
-                if (row.SelectEven && !string.IsNullOrWhiteSpace(row.FullPathEven))
-                    files.Add(row.FullPathEven);
-                if (row.SelectOdd2 && !string.IsNullOrWhiteSpace(row.FullPathOdd2))
-                    files.Add(row.FullPathOdd2);
-                if (row.SelectEven2 && !string.IsNullOrWhiteSpace(row.FullPathEven2))
-                    files.Add(row.FullPathEven2);
+                try
+                {
+                    List<string> files = new List<string>();
+                    foreach (ImageDataSet.ImagesRow row in imageDataSet.Images)
+                    {
+                        if (row.SelectOdd)
+                            files.Add(row.FullPathOdd);
+                        if (row.SelectEven && !string.IsNullOrWhiteSpace(row.FullPathEven))
+                            files.Add(row.FullPathEven);
+                        if (row.SelectOdd2 && !string.IsNullOrWhiteSpace(row.FullPathOdd2))
+                            files.Add(row.FullPathOdd2);
+                        if (row.SelectEven2 && !string.IsNullOrWhiteSpace(row.FullPathEven2))
+                            files.Add(row.FullPathEven2);
+                    }
+                    this.deleteFilesAsync(files);
+                }
+                catch (Exception ex)
+                {
+                    Logger.LogException(appDataFolder, ex, true);
+                }
             }
-            this.deleteFilesAsync(files);
         }
 
         private async void deleteFilesAsync(List<string> files)
@@ -312,12 +346,19 @@ namespace ImageSearchTools
 
         private void btnSelectAll_Click(object sender, EventArgs e)
         {
-            foreach(ImageDataSet.ImagesRow row in imageDataSet.Images)
+            try
             {
-                row.SelectOdd = true;
-                row.SelectEven = (row.IsSelectEvenNull() || string.IsNullOrWhiteSpace(row.FullPathEven) ? false : true);
-                row.SelectOdd2 = (row.IsSelectOdd2Null() || string.IsNullOrWhiteSpace(row.FullPathOdd2) ? false : true);
-                row.SelectEven2 = (row.IsSelectEven2Null() || string.IsNullOrWhiteSpace(row.FullPathEven2) ? false: true);
+                foreach (ImageDataSet.ImagesRow row in imageDataSet.Images)
+                {
+                    row.SelectOdd = true;
+                    row.SelectEven = (row.IsSelectEvenNull() || string.IsNullOrWhiteSpace(row.FullPathEven) ? false : true);
+                    row.SelectOdd2 = (row.IsSelectOdd2Null() || string.IsNullOrWhiteSpace(row.FullPathOdd2) ? false : true);
+                    row.SelectEven2 = (row.IsSelectEven2Null() || string.IsNullOrWhiteSpace(row.FullPathEven2) ? false : true);
+                }
+            }
+            catch (Exception ex)
+            {
+                Logger.LogException(appDataFolder, ex);
             }
         }
     }
