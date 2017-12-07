@@ -5,7 +5,8 @@ based on File Name, Image Dimensions, and/or File Size.</p>
 in order to delete them.</p>
 <b>Latest Release</b>
 <p>Version: 1.0.1.0<br>
-To install the latest published version of the application, <a href="http://jamgalactic.com/applications/IST/install.htm">click here</a></p>
+For the compressed archive, <a href="http://jamgalactic.com/applications/IST/IST.zip">click here</a><br>
+For the online ClickOnce installer, <a href="http://jamgalactic.com/applications/IST/install.htm">click here</a></p>
 <b>Requirements</b>
 <p>This is a Visual Studio 2012 Project that includes the following premium controls</p>
 <ul>
