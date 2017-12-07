@@ -159,9 +159,11 @@ namespace ImageSearchTools
                 {
                     this.lblStatus.Text = @"Filtering Files: " + file.ToString() + " of " + fileCount.ToString();
                 }
-                bool match = false;
+                bool match = true;
                 using (Image img = Image.FromFile(list[i].FullName))
                 {
+                    if ((this.width > 0 && this.height > 0) || this.size > 0)
+                        match = false;
                     if (this.width > 0 && img.Width == this.width && this.height > 0 && img.Height == this.height)
                         match = true;
                     if (this.size > 0 && convertSize(Convert.ToInt32(list[i].Length), this.sizeType) == this.size)
@@ -306,11 +308,17 @@ namespace ImageSearchTools
             this.lblStatus.Text = string.Empty;
             MessageBox.Show("Deleted " + deleted.ToString() + " Images");
             imageDataSet.Images.Clear();
-        }
+        }        
 
-        private void simpleButton1_Click(object sender, EventArgs e)
+        private void btnSelectAll_Click(object sender, EventArgs e)
         {
-
+            foreach(ImageDataSet.ImagesRow row in imageDataSet.Images)
+            {
+                row.SelectOdd = true;
+                row.SelectEven = (row.IsSelectEvenNull() || string.IsNullOrWhiteSpace(row.FullPathEven) ? false : true);
+                row.SelectOdd2 = (row.IsSelectOdd2Null() || string.IsNullOrWhiteSpace(row.FullPathOdd2) ? false : true);
+                row.SelectEven2 = (row.IsSelectEven2Null() || string.IsNullOrWhiteSpace(row.FullPathEven2) ? false: true);
+            }
         }
     }
 }

@@ -64,6 +64,7 @@
             this.pnlActions = new DevExpress.XtraEditors.PanelControl();
             this.btnDelete = new DevExpress.XtraEditors.SimpleButton();
             this.lblStatus = new DevExpress.XtraEditors.LabelControl();
+            this.btnSelectAll = new DevExpress.XtraEditors.SimpleButton();
             ((System.ComponentModel.ISupportInitialize)(this.sccMainSplitter)).BeginInit();
             this.sccMainSplitter.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.txtDirectory.Properties)).BeginInit();
@@ -414,6 +415,7 @@
             // 
             this.pnlActions.Controls.Add(this.btnDelete);
             this.pnlActions.Controls.Add(this.lblStatus);
+            this.pnlActions.Controls.Add(this.btnSelectAll);
             this.pnlActions.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.pnlActions.Location = new System.Drawing.Point(0, 338);
             this.pnlActions.Name = "pnlActions";
@@ -423,7 +425,7 @@
             // btnDelete
             // 
             this.btnDelete.Dock = System.Windows.Forms.DockStyle.Left;
-            this.btnDelete.Location = new System.Drawing.Point(2, 2);
+            this.btnDelete.Location = new System.Drawing.Point(93, 2);
             this.btnDelete.Name = "btnDelete";
             this.btnDelete.Size = new System.Drawing.Size(91, 25);
             this.btnDelete.TabIndex = 1;
@@ -439,6 +441,16 @@
             this.lblStatus.Size = new System.Drawing.Size(168, 25);
             this.lblStatus.TabIndex = 0;
             this.lblStatus.Text = "File 0 of 0";
+            // 
+            // btnSelectAll
+            // 
+            this.btnSelectAll.Dock = System.Windows.Forms.DockStyle.Left;
+            this.btnSelectAll.Location = new System.Drawing.Point(2, 2);
+            this.btnSelectAll.Name = "btnSelectAll";
+            this.btnSelectAll.Size = new System.Drawing.Size(91, 25);
+            this.btnSelectAll.TabIndex = 2;
+            this.btnSelectAll.Text = "Select All";
+            this.btnSelectAll.Click += new System.EventHandler(this.btnSelectAll_Click);
             // 
             // MainForm
             // 
@@ -507,6 +519,7 @@
         private DevExpress.XtraGrid.Columns.GridColumn colImageNumberEven2;
         private DevExpress.XtraGrid.Columns.GridColumn colSelectEven2;
         private DevExpress.XtraGrid.Columns.GridColumn colFullPathEven2;
+        private DevExpress.XtraEditors.SimpleButton btnSelectAll;
     }
 }
 
