@@ -19,6 +19,8 @@ For the online ClickOnce installer, <a href="http://jamgalactic.com/applications
 <li>Display Selected Image Details</li>
 <li>Fix Scrolling with Mouse Wheel</li>
 <li>Keep existing images on screen after deleting others</li>
+<li>Sorting</li>
+<li>Views</li>
 <li>Batch Resize</li>
 <li>Batch Rename</li>
 <li>Other Tasks??</li>
