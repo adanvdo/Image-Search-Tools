@@ -3,7 +3,7 @@
   <asmv1:assemblyIdentity name="ImageSearchTools.exe" version="1.0.0.3" publicKeyToken="0000000000000000" language="neutral" processorArchitecture="msil" type="win32" />
   <application />
   <entryPoint>
-    <assemblyIdentity name="ImageSearchTools" version="1.0.1.0" language="neutral" processorArchitecture="msil" />
+    <assemblyIdentity name="ImageSearchTools" version="1.0.2.0" language="neutral" processorArchitecture="msil" />
     <commandLine file="ImageSearchTools.exe" parameters="" />
   </entryPoint>
   <trustInfo>
@@ -736,14 +736,14 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="ImageSearchTools.exe" size="52224">
-      <assemblyIdentity name="ImageSearchTools" version="1.0.1.0" language="neutral" processorArchitecture="msil" />
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="ImageSearchTools.exe" size="189952">
+      <assemblyIdentity name="ImageSearchTools" version="1.0.2.0" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>dNrt2n9Y2JXpEhVQDkkteHwahO/s8andiczbM1sJ4Tw=</dsig:DigestValue>
+        <dsig:DigestValue>AHPdpP82AkiEkZx9GK+Jx7ph3V+iskkcjqPWGgWBdrc=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>

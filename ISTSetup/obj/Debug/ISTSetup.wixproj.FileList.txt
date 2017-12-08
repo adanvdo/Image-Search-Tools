@@ -1,0 +1,7 @@
+C:\Users\jam\documents\visual studio 2012\Projects\ImageSearchTools\ISTSetup\bin\Debug\cab1.cab
+C:\Users\jam\documents\visual studio 2012\Projects\ImageSearchTools\ISTSetup\bin\Debug\ISTSetup.msi
+C:\Users\jam\documents\visual studio 2012\Projects\ImageSearchTools\ISTSetup\bin\Debug\ISTSetup.wixpdb
+obj\Debug\Product.wixobj
+obj\Debug\ISTSetup.wixproj.BindContentsFileListnull.txt
+obj\Debug\ISTSetup.wixproj.BindOutputsFileListnull.txt
+obj\Debug\ISTSetup.wixproj.BindBuiltOutputsFileListnull.txt

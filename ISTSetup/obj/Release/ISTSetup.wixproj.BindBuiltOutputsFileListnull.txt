@@ -1,0 +1,3 @@
+C:\Users\jam\documents\visual studio 2012\Projects\ImageSearchTools\ISTSetup\bin\Release\cab1.cab
+C:\Users\jam\documents\visual studio 2012\Projects\ImageSearchTools\ISTSetup\bin\Release\ISTSetup.msi
+C:\Users\jam\documents\visual studio 2012\Projects\ImageSearchTools\ISTSetup\bin\Release\ISTSetup.wixpdb
