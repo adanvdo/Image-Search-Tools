@@ -1,32 +1,57 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
-	<Product Id="*" Name="ImageSearchTools" Language="1033" Version="1.0.0.0" Manufacturer="JAMGALACTIC" UpgradeCode="eea49b8e-33af-46fd-81c5-ff084b5eb4ed">
+	<Product Id="*" Name="ImageSearchTools" Language="1033" Version="1.0.3.0" Manufacturer="JAMGALACTIC" UpgradeCode="eea49b8e-33af-46fd-81c5-ff084b5eb4ed">
 		<Package InstallerVersion="200" Compressed="yes" InstallScope="perMachine" />
-
+    <Icon Id="IST.ico" SourceFile="$(var.ImageSearchTools.ProjectDir)\Resources\Icons\IST.ico"/>
 		<MajorUpgrade DowngradeErrorMessage="A newer version of ImageSearchTools is already installed." />
-		<MediaTemplate />
+    <Media Id="1" Cabinet="IST.cab" EmbedCab="yes"/>
+    <WixVariable Id="WixUILicenseRtf" Value="$(var.ImageSearchTools.ProjectDir)\Resources\ist_eula.rtf" />
+    <WixVariable Id="WixUIBannerBmp" Value="$(var.ImageSearchTools.ProjectDir)\Resources\InstallerImages\WixUIBannerBmp.bmp"/>
+    <WixVariable Id="WixUIDialogBmp" Value="$(var.ImageSearchTools.ProjectDir)\Resources\InstallerImages\WixUIDialogBmp.bmp"/>
+
+    <Directory Id="TARGETDIR" Name="SourceDir">
+      <Directory Id="ProgramFilesFolder">
+        <Directory Id="DeveloperFolder" Name="JAMGALACTIC">
+          <Directory Id="INSTALLFOLDER" Name="ImageSearchTools">
+            <Component Id="ApplicationFiles" Guid="BEC1BC60-7FBF-4A00-8F46-120D8D9D24F9">
+              <File Id="MainApplication" Source="$(var.ImageSearchTools.TargetPath)" />
+            </Component>
+          </Directory>
+        </Directory>
+      </Directory>
+      
+      <Directory Id="ProgramMenuFolder">
+        <Directory Id="ProgramMenuSubfolder" Name="JAMGALACTIC">
+          <Component Id="ApplicationShortcuts" Guid="C6FE53F2-5040-48FD-854F-09312C15120C">
+            <Shortcut Id="ApplicationShortcut1" Name="ImageSearchTools" Description="ImageSearchTools by JAMGALACTIC"
+                      Target="[INSTALLFOLDER]ImageSearchTools.exe" WorkingDirectory="INSTALLFOLDER" Icon="IST.ico"/>
+            <RegistryValue Root="HKCU" Key="Software\JAMGALACTIC\ImageSearchTools"
+                      Name="installed" Type="integer" Value="1" KeyPath="yes"/>
+            <RemoveFolder Id="ProgramMenuSubfolder" On="uninstall"/>
+          </Component>
+        </Directory>
+      </Directory>
+    </Directory>    
 
 		<Feature Id="ProductFeature" Title="ImageSearchTools" Level="1">
-			<ComponentGroupRef Id="ProductComponents" />
+			<ComponentRef Id="ApplicationFiles" />
+      <ComponentRef Id="ApplicationShortcuts"/>
 		</Feature>
-	</Product>
 
-	<Fragment>
-		<Directory Id="TARGETDIR" Name="SourceDir">
-			<Directory Id="ProgramFilesFolder">
-        <Directory Id="DeveloperFolder" Name="JAMGALACTIC">
-				  <Directory Id="INSTALLFOLDER" Name="ImageSearchTools" />
-        </Directory>
-			</Directory>
-		</Directory>
-	</Fragment>
+    <UI>
+      <UIRef Id="WixUI_Minimal" />
+      <Publish Dialog="ExitDialog"
+          Control="Finish"
+          Event="DoAction"
+          Value="LaunchApplication">WIXUI_EXITDIALOGOPTIONALCHECKBOX = 1 and NOT Installed</Publish>
+    </UI>
+    <Property Id="WIXUI_EXITDIALOGOPTIONALCHECKBOXTEXT" Value="Launch ImageSearchTools" />
 
-	<Fragment>
-		<ComponentGroup Id="ProductComponents" Directory="INSTALLFOLDER">
-			<!-- TODO: Remove the comments around this Component element and the ComponentRef below in order to add resources to this installer. -->
-			<Component Id="ProductComponent">
-       <File Source="$(var.ImageSearchTools.TargetPath)" />
-			</Component>
-		</ComponentGroup>
-	</Fragment>
+    <!-- Step 3: Include the custom action -->
+    <Property Id="WixShellExecTarget" Value="$(var.ImageSearchTools.TargetPath)" />
+    <CustomAction Id="LaunchApplication"
+        BinaryKey="WixCA"
+        DllEntry="WixShellExec"
+        Impersonate="yes" />
+  </Product>
 </Wix>

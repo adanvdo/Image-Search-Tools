@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.tsMainStrip = new System.Windows.Forms.ToolStrip();
             this.tsbtnClear = new System.Windows.Forms.ToolStripButton();
             this.sccMainSplitter = new DevExpress.XtraEditors.SplitContainerControl();
@@ -475,6 +476,7 @@
             this.ClientSize = new System.Drawing.Size(517, 554);
             this.Controls.Add(this.sccMainSplitter);
             this.Controls.Add(this.tsMainStrip);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "MainForm";
             this.Text = "Image Search Tools by JAMGALACTIC";
             this.Load += new System.EventHandler(this.MainForm_Load);

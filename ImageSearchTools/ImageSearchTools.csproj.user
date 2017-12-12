@@ -2,8 +2,8 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <ProjectView>ShowAllFiles</ProjectView>
-    <PublishUrlHistory />
-    <InstallUrlHistory />
+    <PublishUrlHistory>ftp://ftp.jamgalactic.com/public_html/applications/IST/</PublishUrlHistory>
+    <InstallUrlHistory>http://jamgalactic.com/applications/IST/</InstallUrlHistory>
     <SupportUrlHistory />
     <UpdateUrlHistory />
     <BootstrapperUrlHistory />
