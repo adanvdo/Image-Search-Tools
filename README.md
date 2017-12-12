@@ -4,9 +4,10 @@ based on File Name, Image Dimensions, and/or File Size.</p>
 <p>It was originally written to assist with locating specific images quickly 
 in order to delete them.</p>
 <b>Latest Release</b>
-<p>Version: 1.0.1.0<br>
-For the compressed archive, <a href="http://jamgalactic.com/applications/IST/IST.zip">click here</a><br>
-For the online ClickOnce installer, <a href="http://jamgalactic.com/applications/IST/install.htm">click here</a></p>
+<p>Version: 1.0.3.0<br>
+For the latest source, <a href="http://jamgalactic.com/applications/IST/1.0.3.0/IST_Source_1.0.3.0.zip">click here</a><br>
+For the zipped executable, <a href="http://jamgalactic.com/applications/IST/1.0.3.0/IST_1.0.3.0.zip">click here</a><br>
+For the MSI installer, <a href="http://jamgalactic.com/applications/IST/1.0.3.0/ISTSetup.msi">click here</a></p>
 <b>Requirements</b>
 <p>This is a Visual Studio 2012 Project that includes the following premium controls</p>
 <ul>
