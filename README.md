@@ -15,8 +15,7 @@ For the online ClickOnce installer, <a href="http://jamgalactic.com/applications
 <b>To-Do<b>
 <ul>
 <li><del>Application Icons</del></li>
-<li>Better Quality Icon</li>
-<li>Custom Installer (Get rid of the horrid ClickOnce)</li>
+<li><del>Custom Installer (Get rid of the horrid ClickOnce)</del></li>
 <li>Display Selected Image Details</li>
 <li>Fix Scrolling with Mouse Wheel</li>
 <li>Keep existing images on screen after deleting others</li>
