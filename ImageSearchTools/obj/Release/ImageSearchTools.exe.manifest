@@ -737,14 +737,14 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="ImageSearchTools.exe" size="465408">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="ImageSearchTools.exe" size="466944">
       <assemblyIdentity name="ImageSearchTools" version="1.0.3.0" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>YdzGImXDB8ukj3+zTpXPl3t9CnCApodh+eST1qnTkPY=</dsig:DigestValue>
+        <dsig:DigestValue>D47TU9WRreJVqJQmbkBWOw8KHvxmptv1ncJgCILZiMY=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>

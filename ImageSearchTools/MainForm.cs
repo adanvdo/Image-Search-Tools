@@ -20,7 +20,9 @@ namespace ImageSearchTools
         private DirectoryInfo searchDir = null;
         private string fileName;
         private int width;
+        private string wOperator;
         private int height;
+        private string hOperator;
         private int size;
         private FileSizeType sizeType;        
 
@@ -35,6 +37,8 @@ namespace ImageSearchTools
             this.width = 0;
             this.height = 0;
             this.size = 0;
+            this.wOperator = "==";
+            this.hOperator = "==";
             this.sizeType = FileSizeType.MB;
             this.cbSizeType.SelectedIndex = 1;
         }
@@ -62,19 +66,24 @@ namespace ImageSearchTools
         private void btnSearch_Click(object sender, EventArgs e)
         {
             Cursor.Current = Cursors.WaitCursor;
+            
             if (!String.IsNullOrEmpty(txtDirectory.Text))
             {
-                if (searchDir == null || searchDir.FullName != txtDirectory.Text)
+                if (this.searchDir == null || this.searchDir.FullName != txtDirectory.Text)
                 {
                     if (!Directory.Exists(txtDirectory.Text))
+                    {
                         return;
+                    }
                     else
-                        searchDir = new DirectoryInfo(txtDirectory.Text);
+                        this.searchDir = new DirectoryInfo(txtDirectory.Text);
                 }
                 this.tempResults.Clear();
                 this.fileName = txtName.Text;
                 this.width = (string.IsNullOrWhiteSpace(txtWidth.Text) ? 0 : Convert.ToInt32(txtWidth.Text));
+                this.wOperator = (string.IsNullOrWhiteSpace(cbWidthOperator.EditValue.ToString()) ? "==" : cbWidthOperator.EditValue.ToString());
                 this.height = (string.IsNullOrWhiteSpace(txtHeight.Text) ? 0 : Convert.ToInt32(txtHeight.Text));
+                this.hOperator = (string.IsNullOrWhiteSpace(cbHeightOperator.EditValue.ToString()) ? "==" : cbHeightOperator.EditValue.ToString());
                 this.size = (string.IsNullOrWhiteSpace(txtSize.Text) ? 0 : Convert.ToInt32(txtSize.Text));
 
                 if ((width > 0 && height == 0) || (width == 0 && height > 0))
@@ -96,11 +105,25 @@ namespace ImageSearchTools
             {
                 MessageBox.Show("Please select a directory to search");
             }
-            Cursor.Current = Cursors.Default;
+        }
+
+        private void enableDisableControls(bool b)
+        {
+            txtDirectory.Enabled = b;
+            txtHeight.Enabled = b;
+            txtName.Enabled = b;
+            txtSize.Enabled = b;
+            txtWidth.Enabled = b;
+            btnBrowse.Enabled = b;
+            btnSearch.Enabled = b;
+            cbHeightOperator.Enabled = b;
+            cbWidthOperator.Enabled = b;
+            cbSizeType.Enabled = b;
         }
 
         private async void processSearch()
         {
+            enableDisableControls(false);
             ImageDataSet.ImagesDataTable idt = null;
             this.imageDictionary.Clear();
             this.imageDataSet.Images.Clear();
@@ -148,6 +171,7 @@ namespace ImageSearchTools
                     Logger.LogException(appDataFolder, ex);
                 }
             }
+            enableDisableControls(true);
         }
 
         private int fileCount = 0;
@@ -185,8 +209,26 @@ namespace ImageSearchTools
                     {
                         if ((this.width > 0 && this.height > 0) || this.size > 0)
                             match = false;
-                        if (this.width > 0 && img.Width == this.width && this.height > 0 && img.Height == this.height)
-                            match = true;
+                        if (this.width > 0 && this.height > 0)
+                        {
+                            if (
+                                ((this.wOperator == "==" && img.Width == this.width)
+                                || (this.wOperator == "<" && img.Width < this.width)
+                                || (this.wOperator == ">" && img.Width > this.width)
+                                || (this.wOperator == "<=" && img.Width <= this.width)
+                                || (this.wOperator == ">=" && img.Width >= this.width)
+                                )
+                                && ((this.hOperator == "==" && img.Width == this.height)
+                                || (this.hOperator == "<" && img.Width < this.height)
+                                || (this.hOperator == ">" && img.Width > this.height)
+                                || (this.hOperator == "<=" && img.Width <= this.height)
+                                || (this.hOperator == ">=" && img.Width >= this.height)
+                                )
+                                )
+                            {
+                                match = true;
+                            }
+                        }
                         if (this.size > 0 && convertSize(Convert.ToInt32(list[i].Length), this.sizeType) == this.size)
                             match = true;
                         if (match)
@@ -222,7 +264,8 @@ namespace ImageSearchTools
                                 idt.AddImagesRow(row);
                                 newRow = true;
                             }
-                        }
+                        }                       
+                       
                     }
 
                 }

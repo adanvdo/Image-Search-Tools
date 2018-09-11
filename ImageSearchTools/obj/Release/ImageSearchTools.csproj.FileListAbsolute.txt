@@ -11,3 +11,4 @@ C:\Users\jam\documents\visual studio 2012\Projects\ImageSearchTools\ImageSearchT
 C:\Users\jam\documents\visual studio 2012\Projects\ImageSearchTools\ImageSearchTools\bin\Release\ImageSearchTools.application
 C:\Users\jam\documents\visual studio 2012\Projects\ImageSearchTools\ImageSearchTools\obj\Release\ImageSearchTools.exe.manifest
 C:\Users\jam\documents\visual studio 2012\Projects\ImageSearchTools\ImageSearchTools\obj\Release\ImageSearchTools.application
+C:\Users\jam\Documents\Visual Studio 2012\Projects\ImageSearchTools\ImageSearchTools\obj\Release\ImageSearchTools.csprojResolveAssemblyReference.cache

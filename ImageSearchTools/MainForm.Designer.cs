@@ -33,6 +33,8 @@
             this.tsMainStrip = new System.Windows.Forms.ToolStrip();
             this.tsbtnClear = new System.Windows.Forms.ToolStripButton();
             this.sccMainSplitter = new DevExpress.XtraEditors.SplitContainerControl();
+            this.cbHeightOperator = new DevExpress.XtraEditors.ComboBoxEdit();
+            this.cbWidthOperator = new DevExpress.XtraEditors.ComboBoxEdit();
             this.btnBrowse = new DevExpress.XtraEditors.SimpleButton();
             this.labelControl1 = new DevExpress.XtraEditors.LabelControl();
             this.txtDirectory = new DevExpress.XtraEditors.TextEdit();
@@ -70,6 +72,8 @@
             this.tsMainStrip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.sccMainSplitter)).BeginInit();
             this.sccMainSplitter.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.cbHeightOperator.Properties)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.cbWidthOperator.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtDirectory.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtSize.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtHeight.Properties)).BeginInit();
@@ -113,6 +117,8 @@
             this.sccMainSplitter.Horizontal = false;
             this.sccMainSplitter.Location = new System.Drawing.Point(0, 25);
             this.sccMainSplitter.Name = "sccMainSplitter";
+            this.sccMainSplitter.Panel1.Controls.Add(this.cbHeightOperator);
+            this.sccMainSplitter.Panel1.Controls.Add(this.cbWidthOperator);
             this.sccMainSplitter.Panel1.Controls.Add(this.btnBrowse);
             this.sccMainSplitter.Panel1.Controls.Add(this.labelControl1);
             this.sccMainSplitter.Panel1.Controls.Add(this.txtDirectory);
@@ -134,6 +140,38 @@
             this.sccMainSplitter.SplitterPosition = 157;
             this.sccMainSplitter.TabIndex = 1;
             this.sccMainSplitter.Text = "splitContainerControl1";
+            // 
+            // cbHeightOperator
+            // 
+            this.cbHeightOperator.EditValue = "==";
+            this.cbHeightOperator.Location = new System.Drawing.Point(246, 89);
+            this.cbHeightOperator.Name = "cbHeightOperator";
+            this.cbHeightOperator.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
+            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
+            this.cbHeightOperator.Properties.Items.AddRange(new object[] {
+            "==",
+            ">=",
+            "<=",
+            "<",
+            ">"});
+            this.cbHeightOperator.Size = new System.Drawing.Size(48, 20);
+            this.cbHeightOperator.TabIndex = 5;
+            // 
+            // cbWidthOperator
+            // 
+            this.cbWidthOperator.EditValue = "==";
+            this.cbWidthOperator.Location = new System.Drawing.Point(246, 60);
+            this.cbWidthOperator.Name = "cbWidthOperator";
+            this.cbWidthOperator.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
+            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
+            this.cbWidthOperator.Properties.Items.AddRange(new object[] {
+            "==",
+            ">=",
+            "<=",
+            "<",
+            ">"});
+            this.cbWidthOperator.Size = new System.Drawing.Size(48, 20);
+            this.cbWidthOperator.TabIndex = 3;
             // 
             // btnBrowse
             // 
@@ -157,14 +195,14 @@
             this.txtDirectory.Location = new System.Drawing.Point(102, 3);
             this.txtDirectory.Name = "txtDirectory";
             this.txtDirectory.Size = new System.Drawing.Size(323, 20);
-            this.txtDirectory.TabIndex = 10;
+            this.txtDirectory.TabIndex = 0;
             // 
             // btnSearch
             // 
             this.btnSearch.Location = new System.Drawing.Point(431, 119);
             this.btnSearch.Name = "btnSearch";
             this.btnSearch.Size = new System.Drawing.Size(75, 23);
-            this.btnSearch.TabIndex = 9;
+            this.btnSearch.TabIndex = 8;
             this.btnSearch.Text = "Search";
             this.btnSearch.Click += new System.EventHandler(this.btnSearch_Click);
             // 
@@ -173,21 +211,21 @@
             this.txtSize.Location = new System.Drawing.Point(102, 121);
             this.txtSize.Name = "txtSize";
             this.txtSize.Size = new System.Drawing.Size(76, 20);
-            this.txtSize.TabIndex = 8;
+            this.txtSize.TabIndex = 6;
             // 
             // txtHeight
             // 
             this.txtHeight.Location = new System.Drawing.Point(102, 89);
             this.txtHeight.Name = "txtHeight";
             this.txtHeight.Size = new System.Drawing.Size(138, 20);
-            this.txtHeight.TabIndex = 7;
+            this.txtHeight.TabIndex = 4;
             // 
             // txtWidth
             // 
             this.txtWidth.Location = new System.Drawing.Point(102, 60);
             this.txtWidth.Name = "txtWidth";
             this.txtWidth.Size = new System.Drawing.Size(138, 20);
-            this.txtWidth.TabIndex = 6;
+            this.txtWidth.TabIndex = 2;
             // 
             // cbSizeType
             // 
@@ -200,7 +238,7 @@
             "MB",
             "GB"});
             this.cbSizeType.Size = new System.Drawing.Size(56, 20);
-            this.cbSizeType.TabIndex = 5;
+            this.cbSizeType.TabIndex = 7;
             this.cbSizeType.SelectedIndexChanged += new System.EventHandler(this.cbSizeType_SelectedIndexChanged);
             // 
             // lblSize
@@ -240,7 +278,7 @@
             this.txtName.Location = new System.Drawing.Point(102, 29);
             this.txtName.Name = "txtName";
             this.txtName.Size = new System.Drawing.Size(138, 20);
-            this.txtName.TabIndex = 0;
+            this.txtName.TabIndex = 1;
             // 
             // gcImages
             // 
@@ -484,6 +522,8 @@
             this.tsMainStrip.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.sccMainSplitter)).EndInit();
             this.sccMainSplitter.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.cbHeightOperator.Properties)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.cbWidthOperator.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtDirectory.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtSize.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtHeight.Properties)).EndInit();
@@ -541,6 +581,8 @@
         private DevExpress.XtraGrid.Columns.GridColumn colFullPathEven2;
         private DevExpress.XtraEditors.SimpleButton btnSelectAll;
         private System.Windows.Forms.ToolStripButton tsbtnClear;
+        private DevExpress.XtraEditors.ComboBoxEdit cbHeightOperator;
+        private DevExpress.XtraEditors.ComboBoxEdit cbWidthOperator;
     }
 }
 

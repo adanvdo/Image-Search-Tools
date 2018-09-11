@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
-	<Product Id="*" Name="ImageSearchTools" Language="1033" Version="1.0.3.0" Manufacturer="JAMGALACTIC" UpgradeCode="eea49b8e-33af-46fd-81c5-ff084b5eb4ed">
+	<Product Id="*" Name="ImageSearchTools" Language="1033" Version="1.0.4.0" Manufacturer="JAMGALACTIC" UpgradeCode="eea49b8e-33af-46fd-81c5-ff084b5eb4ed">
 		<Package InstallerVersion="200" Compressed="yes" InstallScope="perMachine" />
     <Icon Id="IST.ico" SourceFile="$(var.ImageSearchTools.ProjectDir)\Resources\Icons\IST.ico"/>
 		<MajorUpgrade DowngradeErrorMessage="A newer version of ImageSearchTools is already installed." />

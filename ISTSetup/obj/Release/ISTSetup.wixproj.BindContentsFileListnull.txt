@@ -1,1 +1,1 @@
-C:\Users\jam\documents\visual studio 2012\Projects\ImageSearchTools\ImageSearchTools\bin\Release\ImageSearchTools.exe
+C:\Users\jam\Documents\Visual Studio 2012\Projects\ImageSearchTools\ImageSearchTools\bin\Release\ImageSearchTools.exe
