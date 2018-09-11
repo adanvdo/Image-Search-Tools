@@ -34,3 +34,19 @@ For the MSI installer, <a href="http://jamgalactic.com/applications/IST/1.0.4.0/
 <li>Batch Rename</li>
 <li>Other Tasks??</li>
 </ul>
+  <p><img src="http://jamgalactic.com/applications/IST/ISTSS.jpg"></p>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
