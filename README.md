@@ -5,6 +5,11 @@ based on File Name, Image Dimensions, and/or File Size.</p>
 in order to delete them.</p>
 <b>Latest Release</b>
 <p>Version: 1.0.4.0<br>
+<p>Changelog</p>
+<ul>
+  <li>Added Size Operators for searching for images by size</li>
+  <li>Disabled controls during search since there is no significant indication a search is running</li>
+</ul>
 For the zipped executable, <a href="http://jamgalactic.com/applications/IST/1.0.4.0/IST_1.0.4.0.zip">click here</a><br>
 For the MSI installer, <a href="http://jamgalactic.com/applications/IST/1.0.4.0/ISTSetup.msi">click here</a></p>
 <b>Previous Versions</b>
