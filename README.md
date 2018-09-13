@@ -16,6 +16,10 @@ For the MSI installer, <a href="http://jamgalactic.com/applications/IST/1.0.4.0/
 <p>Version 1.0.3.0<br>
 <a href="http://jamgalactic.com/applications/IST/1.0.3.0/IST_1.0.3.0.zip">Zipped EXE</a><br>
 <a href="http://jamgalactic.com/applications/IST/1.0.3.0/ISTSetup.msi">MSI Installer</a></p>
+<p>Version: 1.0.3.0<br>
+For the latest source, <a href="http://jamgalactic.com/applications/IST/1.0.3.0/IST_Source_1.0.3.0.zip">click here</a><br>
+For the zipped executable, <a href="http://jamgalactic.com/applications/IST/1.0.3.0/IST_1.0.3.0.zip">click here</a><br>
+For the MSI installer, <a href="http://jamgalactic.com/applications/IST/1.0.3.0/ISTSetup.msi">click here</a></p>
 <b>Requirements</b>
 <p>This is a Visual Studio 2012 Project that includes the following premium controls</p>
 <ul>
@@ -34,19 +38,3 @@ For the MSI installer, <a href="http://jamgalactic.com/applications/IST/1.0.4.0/
 <li>Batch Rename</li>
 <li>Other Tasks??</li>
 </ul>
-  <p><img src="http://jamgalactic.com/applications/IST/ISTSS.jpg"></p>
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  

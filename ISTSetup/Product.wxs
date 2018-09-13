@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
-	<Product Id="*" Name="ImageSearchTools" Language="1033" Version="1.0.4.0" Manufacturer="JAMGALACTIC" UpgradeCode="eea49b8e-33af-46fd-81c5-ff084b5eb4ed">
-		<Package InstallerVersion="200" Compressed="yes" InstallScope="perMachine" />
+	<Product Id="*" Name="ImageSearchTools" Language="1033" Version="1.0.5.0" Manufacturer="JAMGALACTIC" UpgradeCode="eea49b8e-33af-46fd-81c5-ff084b5eb4ed">
+    <Package InstallerVersion="200" Compressed="yes" InstallScope="perMachine" />
     <Icon Id="IST.ico" SourceFile="$(var.ImageSearchTools.ProjectDir)\Resources\Icons\IST.ico"/>
 		<MajorUpgrade DowngradeErrorMessage="A newer version of ImageSearchTools is already installed." />
     <Media Id="1" Cabinet="IST.cab" EmbedCab="yes"/>
@@ -15,6 +15,14 @@
           <Directory Id="INSTALLFOLDER" Name="ImageSearchTools">
             <Component Id="ApplicationFiles" Guid="BEC1BC60-7FBF-4A00-8F46-120D8D9D24F9">
               <File Id="MainApplication" Source="$(var.ImageSearchTools.TargetPath)" />
+              <File Id="DevExpress.Data.v16.1" Source="$(var.ImageSearchTools.ProjectDir)bin\Release\DevExpress.Data.v16.1.dll"/>
+              <File Id="DevExpress.Printing.v16.1.Core" Source="$(var.ImageSearchTools.ProjectDir)bin\Release\\DevExpress.Printing.v16.1.Core.dll"/>
+              <File Id="DevExpress.Sparkline.v16.1.Core" Source="$(var.ImageSearchTools.ProjectDir)bin\Release\\DevExpress.Sparkline.v16.1.Core.dll"/>
+              <File Id="DevExpress.Utils.v16.1" Source="$(var.ImageSearchTools.ProjectDir)bin\Release\\DevExpress.Utils.v16.1.dll"/>
+              <File Id="DevExpress.XtraEditors.v16.1" Source="$(var.ImageSearchTools.ProjectDir)bin\Release\\DevExpress.XtraEditors.v16.1.dll"/>
+              <File Id="DevExpress.XtraGrid.v16.1" Source="$(var.ImageSearchTools.ProjectDir)bin\Release\\DevExpress.XtraGrid.v16.1.dll"/>
+              <File Id="DevExpress.XtraLayout.v16.1" Source="$(var.ImageSearchTools.ProjectDir)bin\Release\\DevExpress.XtraLayout.v16.1.dll"/>
+              <File Id="DevExpress.XtraPrinting.v16.1" Source="$(var.ImageSearchTools.ProjectDir)bin\Release\\DevExpress.XtraPrinting.v16.1.dll"/>
             </Component>
           </Directory>
         </Directory>

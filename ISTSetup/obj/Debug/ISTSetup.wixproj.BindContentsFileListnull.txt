@@ -1,1 +1,9 @@
+C:\Users\jam\Documents\Visual Studio 2012\Projects\ImageSearchTools\ImageSearchTools\bin\Release\DevExpress.Data.v16.1.dll
+C:\Users\jam\Documents\Visual Studio 2012\Projects\ImageSearchTools\ImageSearchTools\bin\Release\\DevExpress.Printing.v16.1.Core.dll
+C:\Users\jam\Documents\Visual Studio 2012\Projects\ImageSearchTools\ImageSearchTools\bin\Release\\DevExpress.Sparkline.v16.1.Core.dll
+C:\Users\jam\Documents\Visual Studio 2012\Projects\ImageSearchTools\ImageSearchTools\bin\Release\\DevExpress.Utils.v16.1.dll
+C:\Users\jam\Documents\Visual Studio 2012\Projects\ImageSearchTools\ImageSearchTools\bin\Release\\DevExpress.XtraEditors.v16.1.dll
+C:\Users\jam\Documents\Visual Studio 2012\Projects\ImageSearchTools\ImageSearchTools\bin\Release\\DevExpress.XtraGrid.v16.1.dll
+C:\Users\jam\Documents\Visual Studio 2012\Projects\ImageSearchTools\ImageSearchTools\bin\Release\\DevExpress.XtraLayout.v16.1.dll
+C:\Users\jam\Documents\Visual Studio 2012\Projects\ImageSearchTools\ImageSearchTools\bin\Release\\DevExpress.XtraPrinting.v16.1.dll
 C:\Users\jam\Documents\Visual Studio 2012\Projects\ImageSearchTools\ImageSearchTools\bin\Debug\ImageSearchTools.exe
